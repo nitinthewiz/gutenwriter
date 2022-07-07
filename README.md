@@ -14,12 +14,12 @@ Well, I recently discovered ["Isolated Block Editor"](https://github.com/Automat
 Good! Please send me a PR. I'm open to ideas and to fixing what all is broken.
 
 # Does this save my work?
-It saves your work in localStorage, which means it's in your browser. Some browsers are callous with local storage, so if you're using it in, say, Safari, you may lose your data. Treat this as a playground, or a quick space to jot down some thoughts and export them in the Gutenberg Blocks format. Don't treat this as a full on editor.
+It saves your work in localStorage, which means it's in your browser. Some browsers are callous with local storage, so if you're using it in, say, Safari, you may lose your data. Treat this as a playground, or a quick space to jot down some thoughts and export them in the Gutenberg Blocks format. Don't treat this as a full-on editor.
 
 # Who would you like to thank?
-First of all, Automattic, for Isolated Block Editor.
-Külli Kittus, over at Unsplash, for the [image](https://unsplash.com/photos/yozux176oDI) you see in the background if you're on desktop.
-[Ommwriter Dana](https://ommwriter.com/), whose amazingly clean interface shall forever be an inspiration to those who know of it.
+- First of all, Automattic, for Isolated Block Editor.
+- Külli Kittus, over at Unsplash, for the [image](https://unsplash.com/photos/yozux176oDI) you see in the background if you're on desktop.
+- [Ommwriter Dana](https://ommwriter.com/), whose amazingly clean interface shall forever be an inspiration to those who know of it.
 
 # License
 MIT, see License files for details.
