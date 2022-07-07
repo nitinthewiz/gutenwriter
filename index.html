@@ -1,0 +1,157 @@
+<html>
+	<head>
+		<title>GutenWriter</title>
+		<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="./isolated-block-editor.js"></script>
+		<!-- <script src="./index.js"></script> -->
+		<link rel="stylesheet" href="./core.css" />
+		<link rel="stylesheet" href="./isolated-block-editor.css" />
+		<meta charset="UTF-8">
+
+		<style>
+			body {
+				margin: 0;
+				padding: 40px;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+				width: 80%;
+				margin: 0 auto;
+
+				background-image: url('kulli-kittus-unsplash.jpg');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size: cover;
+			}
+
+			textarea {
+				width: 100%;
+			}
+
+			.editor {
+				min-height: 200px;
+				width: 100%;
+			}
+
+			.block-editor-block-list__layout p {
+				font-size: 22px;
+			}
+
+			.add-another {
+				margin-top: 50px;
+				padding: 1em;
+				font-weight: 400;
+				border-radius: 9999px;
+				background-color: rgba(45,55,72,1);
+				color: white;
+			}
+
+			.cloner {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Welcome to GutenWriter</h1>
+		<p>Use Gutenberg as a standalone editor here. It doesn't support a lot of embeds, but remote images work. Your work is saved locally in your browser. When you're done, hit the "Export to Clipboard" button to copy your work in the Gutenberg Blocks format (with relevant HTML tags) to be copied to your WordPress blog, or anywhere Gutenberg works!</p>
+
+		<div class="editors">
+			<div class="editor-container">
+				<textarea rows="10"></textarea>
+			</div>
+		</div>
+		<br/>
+		<button class="btn">Export to Clipboard</button>
+	</body>
+
+	<script>
+
+		let timer;              // Timer identifier
+		const waitTime = 500;   // Wait time in milliseconds 
+
+		const textarea = document.querySelector('textarea');
+
+		if (localStorage.getItem("text") !== null){
+			// console.log("localStorage is not empty")
+			textarea.value = localStorage.getItem("text");
+		};
+
+		document.querySelector('div.editors').addEventListener("keyup", () => {
+			// console.log(textarea.value);
+			const text = textarea.value;
+
+			clearTimeout(timer);
+
+			timer = setTimeout(() => {
+				saveContentLocalstorage(text);
+		    }, waitTime);
+		});
+
+		function saveContentLocalstorage(text){
+			// console.log(text);
+			localStorage.setItem("text", text);
+		}
+
+		const u_settings = {
+			iso: {
+				defaultPreferences: {
+					fixedToolbar: true,
+				},
+				toolbar: {
+					inspector: true,
+					toc: true,
+					// navigation: true,
+					documentInspector: true,
+				},
+				moreMenu: {
+					editor: true,
+					fullscreen: true,
+					preview: true,
+					// topToolbar: true,
+				},
+			    sidebar: {
+					inserter: false,
+					inspector: true,
+				},
+			},
+			editor: {
+				codeEditingEnabled: true,
+				autosaveInterval: 6,
+			}
+		};
+
+		// wp.attachEditor( textarea, userSettings = {...u_settings}, onSaveContent = saveContent());
+		wp.attachEditor( textarea, userSettings = {...u_settings});
+
+		// dispatchEvent
+
+		// document.querySelector('div.editor').addEventListener("input", () => {
+		//   console.log(textarea.value);
+		// });
+
+		// textarea.addEventListener("Composition", () => {
+		//   console.log(textarea.value);
+		// });
+
+		var clipboard = new ClipboardJS('.btn', {
+		    text: function() {
+		        return textarea.value;
+		    }
+		});
+
+		clipboard.on('success', function(e) {
+		    console.info('Action:', e.action);
+		    console.info('Text:', e.text);
+		    console.info('Trigger:', e.trigger);
+
+		    e.clearSelection();
+		});
+
+		clipboard.on('error', function(e) {
+		    console.error('Action:', e.action);
+		    console.error('Trigger:', e.trigger);
+		});
+		// }
+	</script>
+</html>
